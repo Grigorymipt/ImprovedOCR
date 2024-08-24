@@ -13,7 +13,7 @@ using namespace std;
 namespace fs = std::filesystem;
 
 
-int getFile(int argc, char** argv, Mat&& src){
+int getFile(int argc, char** argv, Mat&& src, Mat&& img){
     if (argc < 2) { return -1; }
     const char* path = argc >= 3 ? argv[2] : "";
     const char* file = argv[1];
@@ -24,6 +24,7 @@ int getFile(int argc, char** argv, Mat&& src){
     string filename;
     filename = filename.append(path).append("/").append(file);
     // Loads an image
+    img = (imread( samples::findFile( filename ) ));
     src = (imread( samples::findFile( filename ), IMREAD_GRAYSCALE ));
     return 0;
 }
@@ -138,13 +139,13 @@ void saveRects(vector<Rect> &rects, Mat &src, char * filename){
 int main(int argc, char** argv)
 {
     // Declare the output variables
-    Mat src, dst, cdst, cdstP;
+    Mat img, src, dst, cdst, cdstP;
     vector<Vec2f> lines; 
     vector<Vec4i> linesP;
     // lines->reserve(1000);
     // linesP->reserve(1000);
 
-    if(getFile(argc, argv, move(src)) < 0) {return -1;}
+    if(getFile(argc, argv, move(src), move(img)) < 0) {return -1;}
     
     getLines(src, dst, cdst, cdstP, lines, linesP);
     drawTheLines(cdst, lines);
@@ -158,7 +159,7 @@ int main(int argc, char** argv)
     vector<Rect> rects;
     rects = getRects(rects, src, linesP);
 
-    saveRects(rects, src, move((argv[1])));
+    saveRects(rects, img, move((argv[1])));
 
     return 0;
 }

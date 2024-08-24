@@ -12,9 +12,9 @@ do
   echo "opencv script executed for $file"  
 done
 mkdir cropped
-for dir in cropped/* 
+for dir in cropped/*/ 
 do
-  for file in $dir/*
+  for file in $dir/*.png
   do
     tesseract "$file" - -l eng > "${file}.py"
     echo "text was recognized in $file"
