@@ -16,9 +16,9 @@ for dir in cropped/*/
 do
   for file in $dir/*.png
   do
-    tesseract "$file" - -l eng > "${file}.py"
+    python3 otsutesseract.py "$file" > "${file}.py"
     echo "text was recognized in $file"
     python3 askLlama.py "${file}.py" > "${file}-correctedbyLlama.py"
-    rm "${file}.py"
+    #rm "${file}.py"
   done
 done

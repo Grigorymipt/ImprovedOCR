@@ -2,7 +2,7 @@ import requests
 import json
 import sys
 
-url = "http://212.67.9.40:11434/api/generate"
+url = "http://localhost:11434/api/generate"
 promt="Find and complete python code with minimal corrections. Please reply with just the code."
 #promt="Answer following question:"
 filename = sys.argv[1]
